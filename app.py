@@ -4,7 +4,7 @@ import plotly.express as px
 
 
 car_data = pd.read_csv("vehicles_us.csv")
-# car_data.info()
+car_data.info()
 
 # CRIANDO CABEÇALHO
 
@@ -14,6 +14,6 @@ car_data = pd.read_csv("vehicles_us.csv")
 
 # [DESAFIO] SUBSTITUIR BOTÕES POR CAIXA DE SELEÇÃO ONDE O USUÁRIO SELECIONA HIST OU DISPERÇÃO
 
-# ATUALIZAR ARQUIVO READ.ME -> BREVE DESCRIÇÃO DO PROJETO
+# ATUALIZAR ARQUIVO READ.ME -> BREVE DESCRIÇÃO DO PROJETO - FEITO OK
 
-# CRIAR NOVO SERVIÇO WEB NO RENDER
+# CRIAR NOVO SERVIÇO WEB NO RENDER - FEITO OK
