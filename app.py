@@ -3,5 +3,17 @@ import pandas as pd
 import plotly.express as px
 
 
-df_vehicles = pd.read_csv("/vehicles_us.csv")
-df_vehicles.info()
+car_data = pd.read_csv("vehicles_us.csv")
+# car_data.info()
+
+# CRIANDO CABEÇALHO
+
+# BOTÃO CRIAR HISTOGRAMA
+
+# BOTÃO CRIAR GRÁFICO DISPERSÃO
+
+# [DESAFIO] SUBSTITUIR BOTÕES POR CAIXA DE SELEÇÃO ONDE O USUÁRIO SELECIONA HIST OU DISPERÇÃO
+
+# ATUALIZAR ARQUIVO READ.ME -> BREVE DESCRIÇÃO DO PROJETO
+
+# CRIAR NOVO SERVIÇO WEB NO RENDER
