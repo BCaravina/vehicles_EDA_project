@@ -68,10 +68,33 @@ st.plotly_chart(fig, use_container_width=True)
 st.caption("Os valores nulos foram removidos para geração dos gráficos acima.")
 st.divider()
 
-# GRÁFICOS DE DISPERSÃO (criar 2 ou 3 e usar um botão para gerar um deles aleatoriamente)
+
+# GRÁFICOS DE DISPERSÃO COM BOTÕES
+def gerar_dispersao(df, x_col, y_col):
+    """Função que cria e exibe um scatterplot baseado no clique do usuário em um botão.
+    Opções de gráfico:
+    - quilometragem vs preço;
+    - ano de fabricação vs preço.
+    """
+    fig = px.scatter(
+        df,
+        x=x_col,
+        y=y_col,
+        opacity=0.7,
+        # trendline="ols",
+        title=f"{x_col} vs {y_col}",
+    )
+    # exibindo no Streamlit:
+    st.plotly_chart(fig, use_container_width=True)
+
+
 st.subheader("Gráficos de dispersão")
-st.button("Gerar gráfico")
-st.divider()
+
+if st.button("Quilometragem vs Preço"):
+    gerar_dispersao(car_data, "odometer", "price")
+
+if st.button("Ano de Fabricação vs Preço"):
+    gerar_dispersao(car_data, "model_year", "price")
 
 # SLIDER BAR COM OS PREÇOS DOS VEÍCULOS
 st.subheader("Barra rolante")
