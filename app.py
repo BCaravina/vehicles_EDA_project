@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from pandas.api.types import is_numeric_dtype
 import plotly.express as px
 
 # TÍTULO E CABEÇALHO
@@ -28,9 +29,43 @@ st.subheader("Base de dados")
 st.write(car_data)
 st.divider()
 
-# CAIXA DE SELEÇÃO PARA GERAR HISTOGRAMA (3 opções)
+# CAIXA DE SELEÇÃO PARA GERAR HISTOGRAMA (4 opções)
 st.subheader("Histogramas")
-st.write("Selecione uma das opções abaixo para gerar um histograma.")
+
+feature_map = {
+    "Ano de Fabricação": "model_year",
+    "Tipo de Carro": "type",
+    "Cor do Carro": "paint_color",
+    "Marcas": "brand",
+}
+
+feature_label = st.selectbox(
+    "Escolha uma variável para visualizar:",
+    list(feature_map.keys()),
+)
+
+column_name = feature_map[feature_label]
+series = car_data[column_name].dropna()
+
+if is_numeric_dtype(series):
+    fig = px.histogram(
+        car_data,
+        x=column_name,
+        nbins=30,
+        title=f"Histograma de {feature_label}",
+    )
+    fig.update_layout(xaxis_title=None)
+else:
+    fig = px.histogram(
+        car_data,
+        x=column_name,
+        color=column_name,
+        title=f"Distribuição de {feature_label}",
+    )
+    fig.update_layout(xaxis_title=None)
+
+st.plotly_chart(fig, use_container_width=True)
+st.caption("Os valores nulos foram removidos para geração dos gráficos acima.")
 st.divider()
 
 # GRÁFICOS DE DISPERSÃO (criar 2 ou 3 e usar um botão para gerar um deles aleatoriamente)
@@ -41,4 +76,4 @@ st.divider()
 # SLIDER BAR COM OS PREÇOS DOS VEÍCULOS
 st.subheader("Barra rolante")
 st.write("Deslize a barra para ver ")
-st.slider()
+st.slider(label="")
