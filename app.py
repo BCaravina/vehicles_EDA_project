@@ -82,6 +82,7 @@ def gerar_dispersao(df, x_col, y_col):
         y=y_col,
         opacity=0.7,
         # trendline="ols",
+        render_mode="webgl",  # testando se isso deixa o carregamento mais rápido no render
         title=f"{x_col} vs {y_col}",
     )
 
