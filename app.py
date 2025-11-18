@@ -24,9 +24,24 @@ def load_data():
 
 car_data = load_data()
 
-# EXIBINDO A TABELA DE DADOS
+# EXIBINDO A TABELA DE DADOS OU NÃO E DEFININDO A QUANTIDADE DE LINHAS
 st.subheader("Base de dados")
-st.write(car_data)
+
+mostrar_tabela = st.checkbox("Mostrar tabela?", value=False)
+
+if mostrar_tabela:
+    num_linhas = st.slider(
+        "Quantidade de linhas a exibir:",
+        min_value=10,
+        max_value=len(car_data),
+        value=50,
+        step=10,
+    )
+
+    st.dataframe(car_data.head(num_linhas))
+else:
+    st.info("Marque a caixa acima para visualizar a tabela.")
+
 st.divider()
 
 # CAIXA DE SELEÇÃO PARA GERAR HISTOGRAMA (4 opções)
@@ -70,33 +85,37 @@ st.divider()
 
 
 # GRÁFICOS DE DISPERSÃO COM BOTÕES
-def gerar_dispersao(df, x_col, y_col):
-    """Função que cria e exibe um scatterplot baseado no clique do usuário em um botão.
+def gerar_dispersao(df, x_col, y_col, max_points=10000):
+    """Função que cria um scatterplot (com amostragem para melhorar o desempenho) baseado no clique do usuário em um botão e o adiciona à tela.
     Opções de gráfico:
     - quilometragem vs preço;
     - ano de fabricação vs preço.
     """
+    df_plot = df[[x_col, y_col]].dropna()
+
+    # amostragem se há muitos pontos
+    if len(df_plot) > max_points:
+        df_plot = df_plot.sample(max_points, random_state=42)
+
     fig = px.scatter(
-        df,
+        df_plot,
         x=x_col,
         y=y_col,
         opacity=0.7,
-        # trendline="ols",
-        render_mode="webgl",  # testando se isso deixa o carregamento mais rápido no render
         title=f"{x_col} vs {y_col}",
+        render_mode="webgl",
     )
 
-    # atualizando o eixo x da quilometragem de milhões para milhares
     if x_col == "odometer":
-        fig.update_xaxes(tickformat=",d", separatethousands=True)
+        fig.update_xaxes(
+            tickformat=",d",
+            separatethousands=True,
+        )
 
-    # exibindo no Streamlit:
     st.plotly_chart(fig, use_container_width=True)
 
 
-st.subheader("Gráficos de dispersão")
-st.caption("Selecione um dos botões abaixo para visualizar o gráfico correspondente.")
-
+# inicializando o session state
 if "grafico_atual" not in st.session_state:
     st.session_state["grafico_atual"] = None
 
@@ -113,4 +132,4 @@ with button_2:
 # atualizando o session state para mostrar o gráfico na tela
 if st.session_state["grafico_atual"] is not None:
     x_col, y_col = st.session_state["grafico_atual"]
-    gerar_dispersao(car_data, x_col, y_col)
+    gerar_dispersao(car_data, x_col, y_col, max_points=10000)
