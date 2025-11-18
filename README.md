@@ -1,106 +1,112 @@
-# vehicles_EDA_project
+Vehicle Dashboard (Streamlit)
 
-# Vehicle Market EDA
+Este projeto não tem como foco realizar uma análise exploratória profunda.
+O objetivo principal foi praticar a construção de dashboards interativos e aprender a hospedar uma aplicação web acessível remotamente, utilizando Streamlit e Render.
 
-Exploração de dados de anúncios de veículos usada para entender preços, características, padrões de mercado e possíveis insights que podem ajudar compradores, vendedores e entusiastas do setor automotivo. Este projeto será futuramente disponibilizado como uma aplicação online (Streamlit) para visualização dinâmica dos resultados da análise.
+A página inclui visualizações simples e intuitivas baseadas no arquivo vehicles_us.csv, permitindo ao usuário explorar os dados de forma dinâmica.
 
-## 1. Sobre o Projeto
+⸻
 
-A proposta é analisar um conjunto de dados contendo informações de veículos listados para venda, incluindo preço, quilometragem, tipo, condição, ano do modelo e outros atributos relevantes. Os principais objetivos são:
+1. Sobre o Projeto
 
-- Identificar padrões de precificação
-- Detectar tendências por tipo de veículo
-- Explorar impacto de variáveis como quilometragem, condição, ano, combustível
-- Encontrar possíveis anomalias ou outliers
-- Criar visualizações claras e intuitivas
-- Preparar tudo para deploy online (Streamlit + Render)
+A aplicação contém:
+	•	Uma tabela interativa exibindo todo o conteúdo do arquivo vehicles_us.csv
+	•	Um menu de seleção com 4 opções para gerar histogramas:
+	•	Ano de fabricação (model_year)
+	•	Cor do veículo (paint_color)
+	•	Tipo de veículo (type)
+	•	Marca (brand)
+	•	Dois botões que permitem escolher gráficos de dispersão:
+	•	Quilometragem vs Preço (odometer vs price)
+	•	Ano de fabricação vs Preço (model_year vs price)
 
-## 2. Fonte dos Dados
+O foco foi exercitar:
+	•	manipulação dinâmica de dados com pandas,
+	•	construção de visualizações com Plotly,
+	•	interação via Streamlit,
+	•	organização do código em componentes reutilizáveis,
+	•	e deploy da aplicação em ambiente online.
 
-Arquivo utilizado: vehicles_data.csv
+2. Fonte dos Dados
 
-O dataset contém as seguintes colunas principais:
+Arquivo utilizado: vehicles_us.csv
 
-price – Preço do veículo
-model_year – Ano do modelo
-model – Modelo do veículo
-condition – Estado do veículo
-cylinders – Nº de cilindros
-fuel – Tipo de combustível
-odometer – Quilometragem
-transmission – Tipo de transmissão
-type – Categoria (SUV, sedan, pickup etc.)
-paint_color – Cor
-is_4wd – Tração 4x4
-date_posted – Data do anúncio
-days_listed – Dias ativo antes de ser vendido
+Principais colunas contidas no dataset:
+	•	price – Preço do veículo
+	•	model_year – Ano de fabricação
+	•	model – Modelo
+	•	condition – Estado do veículo
+	•	cylinders – Número de cilindros
+	•	fuel – Tipo de combustível
+	•	odometer – Quilometragem
+	•	transmission – Tipo de transmissão
+	•	type – Categoria (SUV, sedan, pickup, etc.)
+	•	paint_color – Cor
+	•	is_4wd – Tração 4x4
+	•	date_posted – Data do anúncio
+	•	days_listed – Quantidade de dias listado
 
-## 3. Questões a Explorar na EDA
+⸻
 
-- Como o preço varia entre diferentes tipos de veículo?
-- Quilometragem influencia o preço de forma linear?
-- Há marcas/modelos que depreciam mais rápido?
-- Ano do modelo é um bom preditor de valor?
-- Quais variáveis contribuem para outliers de preço?
-- Há diferenças entre veículos 4x4 e 4x2?
+3. Objetivo da Aplicação
 
-## 4. Estrutura do Projeto (sugerida)
+O objetivo não é interpretar esses dados profundamente, mas sim:
+	•	demonstrar visualizações básicas de forma interativa,
+	•	permitir que qualquer usuário explore o dataset rapidamente,
+	•	e aprender a publicar essa aplicação online para acesso de qualquer lugar.
+
+4. Estrutura do Projeto
 
 vehicles_EDA_project/
-│── data/
-│   └── vehicles_data.csv
-│
+│── .streamlit/
+│   └── config.toml
+|
 │── notebooks/
-│   └── eda.ipynb
+│   └── EDA.ipynb
 │
-│── src/
-│   └── utils.py
-│   └── processing.py
-│
-│── app/
-│   └── app.py
-│
-│── requirements.txt
+│── vehicles-eda-venv
+| 
+│── app.py
 │── README.md
+│── requirements.txt
+│── vehicles_data.csv
 
-## 5. Tecnologias Utilizadas
+Obs.: Como o foco do projeto era desenvolver a aplicação em Streamlit e fazer deploy a estrutura foi mantida enxuta propositalmente.
 
-Python
-Pandas
-NumPy
-Matplotlib / Seaborn / Plotly
-Streamlit
-VSCode
-Render (deploy)
+5. Tecnologias Utilizadas
+•	Python
+•	Pandas – carregamento e manipulação de dados
+•	Plotly – gráficos interativos
+•	Streamlit – interface e interação com o usuário
+•	VSCode – ambiente de desenvolvimento
+•	Render – hospedagem da aplicação online
 
-## 6. Como Executar Localmente
+6. Como Executar Localmente
 
 Clone o repositório:
-
-git clone https://github.com/BCaravina/vehicles_EDA_project.git
-cd vehicles_EDA_project
+    git clone https://github.com/BCaravina/vehicles_EDA_project.git
+    cd vehicles_EDA_project
 
 Crie um ambiente virtual:
-
-python3 -m venv .venv
-source .venv/bin/activate
+    python3 -m venv .venv
+    source .venv/bin/activate
 
 Instale os requisitos:
-
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 Rode a aplicação Streamlit:
+    streamlit run app/app.py
 
-streamlit run app/app.py
+A aplicação abrirá automaticamente no seu navegador.
 
-## 7. Status do Projeto
+7. Status do Projeto
 
-- [x] Configuração inicial
-- [x] EDA preliminar
-- [ ] Tratamento avançado dos dados
-- [ ] Construção do dashboard Streamlit
-- [ ] Deploy no Render
+•	Estrutura inicial do projeto
+•	Construção dos dashboards interativos
+•	Implementação de histogramas
+•	Implementação de gráficos de dispersão
+•	Deploy online via Render
 
-## 8. Licença
+8. Licença
 
-Projeto de uso educacional e pessoal.
+Projeto desenvolvido para fins educacionais e pessoais.
