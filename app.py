@@ -85,6 +85,9 @@ st.divider()
 
 
 # GRÁFICOS DE DISPERSÃO COM BOTÕES
+st.subheader("Gráficos de dispersão")
+
+
 def gerar_dispersao(df, x_col, y_col, max_points=10000):
     """Função que cria um scatterplot (com amostragem para melhorar o desempenho) baseado no clique do usuário em um botão e o adiciona à tela.
     Opções de gráfico:
@@ -133,3 +136,6 @@ with button_2:
 if st.session_state["grafico_atual"] is not None:
     x_col, y_col = st.session_state["grafico_atual"]
     gerar_dispersao(car_data, x_col, y_col, max_points=10000)
+    st.caption(
+        "A amostragem dos dados foi limitada em 10,000 para otimizar a velocidade de renderização."
+    )
