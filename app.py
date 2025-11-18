@@ -24,7 +24,7 @@ def load_data():
 
 car_data = load_data()
 
-# TABELA DE DADOS
+# EXIBINDO A TABELA DE DADOS
 st.subheader("Base de dados")
 st.write(car_data)
 st.divider()
@@ -84,19 +84,32 @@ def gerar_dispersao(df, x_col, y_col):
         # trendline="ols",
         title=f"{x_col} vs {y_col}",
     )
+
+    # atualizando o eixo x da quilometragem de milhões para milhares
+    if x_col == "odometer":
+        fig.update_xaxes(tickformat=",d", separatethousands=True)
+
     # exibindo no Streamlit:
     st.plotly_chart(fig, use_container_width=True)
 
 
 st.subheader("Gráficos de dispersão")
+st.caption("Selecione um dos botões abaixo para visualizar o gráfico correspondente.")
 
-if st.button("Quilometragem vs Preço"):
-    gerar_dispersao(car_data, "odometer", "price")
+if "grafico_atual" not in st.session_state:
+    st.session_state["grafico_atual"] = None
 
-if st.button("Ano de Fabricação vs Preço"):
-    gerar_dispersao(car_data, "model_year", "price")
+# adicionando e mantendo os botões lado a lado
+button_1, button_2 = st.columns(2)
 
-# SLIDER BAR COM OS PREÇOS DOS VEÍCULOS
-st.subheader("Barra rolante")
-st.write("Deslize a barra para ver ")
-st.slider(label="")
+with button_1:
+    if st.button("Quilometragem vs Preço"):
+        st.session_state["grafico_atual"] = ("odometer", "price")
+with button_2:
+    if st.button("Ano de Fabricação vs Preço"):
+        st.session_state["grafico_atual"] = ("model_year", "price")
+
+# atualizando o session state para mostrar o gráfico na tela
+if st.session_state["grafico_atual"] is not None:
+    x_col, y_col = st.session_state["grafico_atual"]
+    gerar_dispersao(car_data, x_col, y_col)
